@@ -1,6 +1,5 @@
 <?php
-    require __DIR__ . '/vendor/autoload.php';
-    use josegonzalez\Dotenv\Loader as EnvLoader;
+    require 'utilities/mysql.php';
 ?>
 
 <?php
@@ -13,11 +12,7 @@
     <p>Hello world!</p>
 
     <?php
-        $loader = new EnvLoader('.env');
-        $loader->parse();
-        $loader->toEnv();
-
-        $con = mysqli_connect($_ENV['DB_HOST'], $_ENV['USERNAME'], $_ENV['PASSWORD'], $_ENV['DB_NAME'], $_ENV['DB_PORT']);
+        $con = get_db_connection();
 
         if (!$con) {
             echo 'Error: Unable to connect to MySQL.' . PHP_EOL;
