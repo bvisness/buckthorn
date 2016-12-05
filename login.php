@@ -25,6 +25,7 @@
 
 <?php
     $header_options['title'] = 'Sign In';
+    $header_options['is_login_page'] = true;
     include 'templates/header.php';
 ?>
 

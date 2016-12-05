@@ -9,10 +9,6 @@
     // Anything that can redirect must be up here, before any content is sent
     // to the browser.
 
-    if (!is_logged_in()) {
-        redirect('login.php');
-    }
-
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['t_id'])) {
             $team = query_first('SELECT t_id FROM team WHERE t_id = %t_id%', [
@@ -30,6 +26,7 @@
 
 <?php
     $header_options['title'] = 'Sign In';
+    $header_options['is_team_select_page'] = true;
     include 'templates/header.php';
 ?>
 
