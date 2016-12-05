@@ -1,4 +1,3 @@
-<PHP> echo '<link rel="stylesheet" type="text/css" href="normalize.css"></head>'; <PHP>
 <?php
     require 'utilities/mysql.php';
     require 'utilities/output_helpers.php';
