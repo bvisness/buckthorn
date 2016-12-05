@@ -16,6 +16,7 @@
             if (empty($researcher)) {
                 $_POST['error'] = "No researcher found with ID $_POST[r_id]";
             } else {
+                logout(); // gets rid of selected team too
                 login($_POST['r_id']);
                 redirect(url('/'));
             }

@@ -18,10 +18,6 @@
         redirect('login.php');
     } else if (is_logged_in() && !is_team_selected() && !$header_options['is_team_select_page']) {
         redirect('teamselect.php');
-    } else if (is_logged_in() && is_team_selected()) {
-        if ($header_options['is_login_page'] || $header_options['is_team_select_page']) {
-            redirect('/');
-        }
     }
 ?>
 
