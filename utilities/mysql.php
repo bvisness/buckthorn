@@ -4,6 +4,13 @@ require_once 'env.php';
 
 $_con = null;
 
+/**
+ * Gets a connection to the database. This can be safely called as many times
+ * as you want during the script's execution. If a connection is already open,
+ * that connection will be used.
+ *
+ * @return mysqli The database connection object.
+ */
 function get_db_connection()
 {
     if (!empty($_con)) {
@@ -19,6 +26,12 @@ function get_db_connection()
     return $_con;
 }
 
+/**
+ * Escapes a value for safe use in a MySQL query.
+ *
+ * @param  mixed  $value The value to escape.
+ * @return string        The escaped version of the value.
+ */
 function escape($value)
 {
     $con = get_db_connection();
@@ -26,6 +39,43 @@ function escape($value)
     return mysqli_real_escape_string($con, $value);
 }
 
+/**
+ * Makes a query to the database and returns the result in a nice format.
+ *
+ * This function also does automatic escaping of values passed into it. The
+ * function will automatically attempt to replace any instances of %name%
+ * with the corresponding value in $parameters. For example, if the query
+ * is the following:
+ *
+ * SELECT * FROM my_table WHERE my_column = %column_value%
+ *
+ * and $parameters is the following:
+ *
+ * [
+ *     "column_value" => "'A dangerous string'; DROP TABLE my_table;"
+ * ]
+ *
+ * then %column_value% will be replaced with an escaped version of the
+ * dangerous string seen above.
+ *
+ * @param  string $query      The MySQL query to execute.
+ * @param  array  $parameters An associative array of values to substitute
+ *                            into the query. For each entry, the key is the
+ *                            name of the attribute, and the value is the
+ *                            value to substitute into the query.
+ * @return boolean|array      This function will return one of the
+ *                            following values:
+ *                             - An array of associative arrays, if the query
+ *                               was of the kind that returns results. The
+ *                               outer array will have one entry for each row.
+ *                               Each row is represented by an associative
+ *                               array where the keys are column names and the
+ *                               values are the corresponding values.
+ *                             - true if the query was successful but returned
+ *                               no results. (This can happen with queries like
+ *                               DELETE, for example.)
+ *                             - false if an error occurred.
+ */
 function query($query, $parameters = [])
 {
     $query = preg_replace_callback(
