@@ -1,0 +1,6 @@
+html {
+  font-family: sans-serif; /*default font family in all browsers*/
+  line-height: 1.15; /*line height in all browsers*/
+  -ms-text-size-adjust: 100%; /*Prevent adjustments of font size after orientation changes*/
+  -webkit-text-size-adjust: 100%;
+}
