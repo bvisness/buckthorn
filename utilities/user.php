@@ -3,6 +3,18 @@
 require_once 'mysql.php';
 require_once 'session.php';
 
+function login($id)
+{
+    $_SESSION['r_id'] = $id;
+}
+
+function logout()
+{
+    if (isset($_SESSION['r_id'])) {
+        unset($_SESSION['r_id']);
+    }
+}
+
 function get_user($id = null)
 {
     // Use the currently logged-in user by default
