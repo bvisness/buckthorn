@@ -20,7 +20,7 @@
     <table>
         <thead>
             <tr>
-                <td>Team NameTESTIFAPPEARS</td>
+                <td>Team Name</td>
                 <td>Researchers</td>
             </tr>
         </thead>
