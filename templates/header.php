@@ -12,6 +12,7 @@ $header_options += [
 
 <head>
     <title><?php echo $header_options['title'] ?></title>
+    <link rel="stylesheet" type="text/css" href="normalize.css"></link>
 </head>
 
 <body>
