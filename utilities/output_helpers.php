@@ -8,8 +8,14 @@ function url($path)
     if (isset($_ENV['SITE_ROOT'])) {
         $base = $_ENV['SITE_ROOT'];
     }
-    
-    return $base . $path;
+
+    return rtrim($base, '/') . '/' . ltrim($path, '/');
+}
+
+function redirect($url)
+{
+    header('Location: ' . $url);
+    exit;
 }
 
 function debug_table($rows)

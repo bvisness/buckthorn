@@ -103,3 +103,23 @@ function query($query, $parameters = [])
 
     return $result->fetch_all(MYSQLI_ASSOC);
 }
+
+/**
+ * Same as the query function, but in the case where query would return
+ * multiple results, this function returns only the first object in the
+ * result set.
+ */
+function query_first($query, $parameters = [])
+{
+    $result = query($query, $parameters);
+
+    if ($result === false || $result === true) {
+        return $result;
+    }
+
+    if (empty($result)) {
+        return null;
+    } else {
+        return array_shift($result);
+    }
+}
