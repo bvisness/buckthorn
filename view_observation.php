@@ -3,7 +3,7 @@
     require_once 'utilities/output_helpers.php';
 ?>
 <?php
-    $header_options['title'] = 'View Observations';
+    $header_options['title'] = 'View Observation';
     include 'templates/header.php';
 ?>
 
@@ -15,7 +15,7 @@
         ]);
     ?>
 
-    <h1>Observation <?php echo empty($observation) ? '??' : $observation['o_id'] ?></h1>
+    <h1>Observation Details</h1>
 
     <?php if (empty($observation)): ?>
         <p class="error">No observation found with id <?php echo $_GET['id'] ?></p>

@@ -4,7 +4,7 @@
 ?>
 
 <?php
-    $header_options['title'] = 'Teams';
+    $header_options['title'] = 'All Teams';
     include 'templates/header.php';
 ?>
 
@@ -19,8 +19,8 @@
     <table>
         <thead>
             <tr>
-                <td>Team Name</td>
-                <td>Researchers</td>
+                <th>Team Name</th>
+                <th>Researchers</th>
             </tr>
         </thead>
         <tbody>
@@ -33,13 +33,8 @@
                                 't_id' => $team['t_id'],
                             ]);
                             
-                            $researcher_htmls = [];
-                            foreach ($researchers as $researcher) {
-                                $link = "<a href=\"" . url("/researchers.php?id=$researcher[r_id]") . "\">$researcher[r_name]</a>";
-                                $researcher_htmls[] = $link;
-                            }
-
-                            echo implode(', ', $researcher_htmls);
+                            $researcher_names = array_column($researchers, 'r_name');
+                            echo implode(', ', $researcher_names);
                         ?>
                     </td>
                 </tr>
