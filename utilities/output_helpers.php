@@ -41,3 +41,8 @@ function debug_table($rows)
     </table>
 <?php
 }
+
+function e($output)
+{
+    return htmlspecialchars($output);
+}
