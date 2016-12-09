@@ -18,13 +18,10 @@
 		<p>Median Buckthorn stem circumference (cm): <input type = 'text' id = 'o_circumference'></p>
 		<p>URL to photos: <input type = 'text' id = 'o_photos'></p>
 	</form>
+	<?php /* The following button is left as a reminder that we need to create a link to another page. Probably this starts a method in JS to redirect*/?>
 	<p><input type = 'button' value = 'Submit' id = 'submitObservation'/></p>
-	<?php /* The following two inputs are left as a reminder that we need to create a link to another page. Probably this starts a method in JS to redirect*/?>
-	<p><input type = 'button' value = 'Add a biodiversity observation' id = 'createBio_count'/></p> 
-	<p><input type = 'button' value = 'Add a competition observation' id = 'createCompteition'/></p>
 
 <?php /* ------------------- PAGE CONTENT ENDS HERE ------------------- */ ?>
-
 <?php
     include 'templates/footer.php';
 ?>
