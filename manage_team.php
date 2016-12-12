@@ -50,6 +50,12 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+	<p><h3>Add a team member</h3></p>
+	<form action="search_researcher.php" method="post">
+	<input type = "hidden" name= "t_id" value = "<?php echo $_GET['id']?>" />
+	<p>Name: <input type='text' name = 'researcher_name'/></p>
+	<p><input type='submit' value='Search'/></p>
+	</form>
 
 <?php /* ------------------- PAGE CONTENT ENDS HERE ------------------- */ ?>
 <?php
