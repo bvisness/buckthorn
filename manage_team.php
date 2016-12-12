@@ -3,14 +3,14 @@
     require_once 'utilities/output_helpers.php';
 ?>
 <?php
-    $header_options['title'] = 'View Observation';
+    $header_options['title'] = 'View Team';
     include 'templates/header.php';
 ?>
 
 <?php /* ------------------- PAGE CONTENT BEGINS HERE ------------------- */ ?>
 
 	<?php
-        $current_team = query('SELECT * FROM researcher natural join membership where t_id = %t_id% and (end > NOW() or end is null)', [
+        $current_team = query('SELECT * FROM researcher natural join membership where t_id = %t_id%', [
             't_id' => $_GET['id'],
         ]);
     ?>
@@ -37,7 +37,15 @@
                     <td><?php echo $member['r_id'] ?></td>
                     <td><?php echo $member['r_name'] ?></td>
                     <td><?php echo $member['begin'] ?></td>
-                    <td><?php echo $member['end'] ?></td>
+                    <td><?php  if(empty($member['end'])){ 
+										$set_end_date_url = url("deactivate_researcher.php?m_id=$member[m_id]"); ?>
+										<a href = <?php echo $set_end_date_url ?>> Deactivate <a/>
+							<?php }
+										else{ 
+											echo $member['end'];
+							            }
+										?>
+					</td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
