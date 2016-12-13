@@ -60,6 +60,14 @@
                         <th>Photos</th>
                         <td><a href="<?php echo e($observation['o_photos']) ?>">View</a></td>
                     </tr>
+                    <tr>
+                        <th>Habitat description</th>
+                        <td><?php echo e($notes['n_habitat']) ?></td>
+                    </tr>
+                    <tr>
+                        <th>Other notes</th>
+                        <td><?php echo e($notes['n_general']) ?></td>
+                    </tr>
                 </tbody>
             </table>
 
@@ -114,6 +122,10 @@
                     </tr>
                 </tbody>
             </table>
+
+            <h3>Notes</h3>
+
+            <p><?php echo e($notes['n_biodiversity']) ?></p>
         </div>
         <div class="competitions">
             <h2>Competitions</h2>
@@ -158,25 +170,10 @@
                     </tbody>
                 </table>
             <?php endforeach; ?>
-        </div>
-        <div class="notes">
-            <h2>Notes</h2>
-            <div class="note">
-                <h3 class="title">Habitat</h3>
-                <div class="content"><?php echo e($notes['n_habitat']) ?></div>
-            </div>
-            <div class="note">
-                <h3 class="title">General</h3>
-                <div class="content"><?php echo e($notes['n_general']) ?></div>
-            </div>
-            <div class="note">
-                <h3 class="title">Biodiversity</h3>
-                <div class="content"><?php echo e($notes['n_biodiversity']) ?></div>
-            </div>
-            <div class="note">
-                <h3 class="title">Competition</h3>
-                <div class="content"><?php echo e($notes['n_competition']) ?></div>
-            </div>
+
+            <h3>Notes</h3>
+
+            <p><?php echo e($notes['n_competition']) ?></p>
         </div>
     <?php endif; ?>
 
