@@ -38,6 +38,16 @@ $insert_notes_fields = [
     'n_competition',
 ];
 
+$shannon_wiener_query = <<<'EOD'
+SELECT
+    -SUM(
+            (bc_count / (SELECT SUM(bc_count) FROM bio_count WHERE o_id = %o_id%))
+        * LN(bc_count / (SELECT SUM(bc_count) FROM bio_count WHERE o_id = %o_id%))
+    ) as H
+FROM bio_count
+WHERE o_id = %o_id%
+EOD;
+
 function generate_insert_query($table, $fields)
 {
     $percented_fields = array_map(function ($field) {
