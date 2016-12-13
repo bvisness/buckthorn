@@ -30,7 +30,7 @@
                     <td><a href=<?php echo $manage_team_url?>><?php echo $team['t_name'] ?></td>
                     <td>
                         <?php
-                            $researchers = query('SELECT researcher.r_id, r_name FROM membership JOIN researcher ON membership.r_id = researcher.r_id WHERE t_id = %t_id%', [
+                            $researchers = query('SELECT researcher.r_id, r_name FROM membership JOIN researcher ON membership.r_id = researcher.r_id WHERE t_id = %t_id% and (end is null or end > NOW())', [
                                 't_id' => $team['t_id'],
                             ]);
                             
