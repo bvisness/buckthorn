@@ -9,7 +9,6 @@
 													'r_id' => $_GET['r_id'],
 													't_id' => $_GET['t_id'],
 													]);
-	var_dump($existing_membership);
 	if(empty($existing_membership)){
 		$new_teammate_query = query('INSERT INTO membership (r_id, t_id, begin)
 														VALUES (%r_id%,%t_id%, NOW())',[
