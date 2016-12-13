@@ -42,6 +42,11 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+	<h3>Create a new team</h3>
+	<form  method="post" action="create_team.php">
+	<p>Name: <input type='text' name = 'team_name'/></p>
+	<p><input type='submit' value='Create Team' /></p>
+	</form>
 
 <?php /* ------------------- PAGE CONTENT ENDS HERE ------------------- */ ?>
 
