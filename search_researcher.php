@@ -16,7 +16,8 @@
         ]);
     ?>
 	
-	<h1>Researchers found for the search string: <?php echo $researcher_name?></h1>
+	<h1>Search Researchers</h1>
+	<h5>Researchers found for the search string: <?php echo $researcher_name?></h5>
 	
 	<table>
         <thead>
@@ -41,6 +42,13 @@
             <?php endforeach; ?>
         </tbody>
     </table>
+	<h4>Search for a different researcher:</h4>
+	<form  method="post">
+	<input type = "hidden" name= "t_id" value = "<?php echo $_POST['t_id']?>" />
+	<p>Name: <input type='text' name = 'researcher_name'/></p>
+	<p><input type='submit' value='Search existing students' formaction="search_researcher.php"/></p>
+	<p><input type='submit' value='Add team member as a new student' formaction="create_researcher.php"/></p>
+	</form>
 
 <?php /* ------------------- PAGE CONTENT ENDS HERE ------------------- */ ?>
 

@@ -51,10 +51,11 @@
         </tbody>
     </table>
 	<p><h3>Add a team member</h3></p>
-	<form action="search_researcher.php" method="post">
+	<form  method="post">
 	<input type = "hidden" name= "t_id" value = "<?php echo $_GET['id']?>" />
 	<p>Name: <input type='text' name = 'researcher_name'/></p>
-	<p><input type='submit' value='Search'/></p>
+	<p><input type='submit' value='Search existing students' formaction="search_researcher.php"/></p>
+	<p><input type='submit' value='Add team member as a new student' formaction="create_researcher.php"/></p>
 	</form>
 
 <?php /* ------------------- PAGE CONTENT ENDS HERE ------------------- */ ?>
