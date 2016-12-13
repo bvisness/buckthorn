@@ -1,4 +1,5 @@
 <?php
+    require_once 'utilities/buckthorn.php';
     require_once 'utilities/env.php';
     require_once 'utilities/output_helpers.php';
 ?>
@@ -67,11 +68,96 @@
         </div>
         <div class="bio_counts">
             <h2>Biodiversities</h2>
-            <?php /* Need to fill this in */ ?>
+
+            <?php
+                $bio_counts = query('SELECT * FROM bio_count WHERE o_id = %o_id%', [
+                    'o_id' => $observation['o_id'],
+                ]);
+                $bio_count_buckthorns = array_filter($bio_counts, function ($bio_count) {
+                    return $bio_count['bc_is_buckthorn'] == '1';
+                });
+                $bio_count_buckthorn = array_shift($bio_count_buckthorns);
+
+                // Yes, we compute Shannon-Wiener completely through MySQL. Heck yeah!
+                $shannon_wiener = query_first($shannon_wiener_query, [
+                    'o_id' => $observation['o_id'],
+                ]);
+
+                $species_counter = ord('A');
+            ?>
+            
+            <table>
+                <tbody>
+                    <?php if (!empty($bio_count_buckthorn)): ?>
+                        <tr>
+                            <th>Buckthorn count</th>
+                            <td><?php echo $bio_count_buckthorn['bc_count'] ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php foreach ($bio_counts as $bio_count): ?>
+                        <?php
+                            if ($bio_count['bc_is_buckthorn'] == '1') {
+                                continue;
+                            }
+                        ?>
+                        <tr>
+                            <th>Species <?php echo chr($species_counter) ?> count</th>
+                            <td><?php echo $bio_count['bc_count'] ?></td>
+                        </tr>
+                        <?php
+                            $species_counter++;
+                        ?>
+                    <?php endforeach; ?>
+                    <tr>
+                        <th>Shannon-Wiener Index</th>
+                        <td><?php echo $shannon_wiener['H'] ?></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="competitions">
             <h2>Competitions</h2>
-            <?php /* Need to fill this in */ ?>
+            
+            <?php
+                $competitions = query('SELECT * FROM competition WHERE o_id = %o_id%', [
+                    'o_id' => $observation['o_id'],
+                ]);
+
+                $stem_counter = 0;
+            ?>
+
+            <?php foreach ($competitions as $competition): ?>
+                <?php
+                    $stem_counter++;
+                ?>
+
+                <h3>Stem <?php echo $stem_counter ?></h3>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Stem DBH</th>
+                            <td><?php echo $competition['c_dbh_buckthorn'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Nearest buckthorn neighbor: DBH</th>
+                            <td><?php echo $competition['c_dbh_neighbor_b'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Nearest buckthorn neighbor: Distance</th>
+                            <td><?php echo $competition['c_distance_b'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Nearest non-buckthorn neighbor: DBH</th>
+                            <td><?php echo $competition['c_dbh_neighbor_nb'] ?></td>
+                        </tr>
+                        <tr>
+                            <th>Nearest non-buckthorn neightbor: Distance</th>
+                            <td><?php echo $competition['c_distance_nb'] ?></td>
+                        </tr>
+                    </tbody>
+                </table>
+            <?php endforeach; ?>
         </div>
         <div class="notes">
             <h2>Notes</h2>
