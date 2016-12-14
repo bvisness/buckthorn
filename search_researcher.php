@@ -1,6 +1,11 @@
 <?php
     require_once 'utilities/mysql.php';
     require_once 'utilities/user.php';
+    require_once 'utilities/output_helpers.php';
+
+    if (! is_admin()):
+        redirect('/');
+    endif;
 ?>
 <?php
     $header_options['title'] = 'Search researchers';
