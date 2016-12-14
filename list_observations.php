@@ -12,7 +12,13 @@
     <?php /* View list of observations */ ?>
 
     <?php
-        $observations = query('SELECT o_id, t_id, o_date FROM observation');
+        if (is_admin()):
+            $observations = query('SELECT o_id, t_id, o_date FROM observation');
+        else:
+            $observations = query('SELECT o_id, t_id, o_date FROM observation WHERE t_id = %t_id%', [
+                't_id' => $_SESSION['t_id']
+            ]);
+        endif;
     ?>
 
     <h1>Observations</h1>
