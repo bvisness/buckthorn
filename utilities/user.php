@@ -75,5 +75,5 @@ function is_team_selected()
 
 function is_admin()
 {
-    return $_SESSION['t_id'] === 0;
+    return (int) $_SESSION['t_id'] === 0;
 }
