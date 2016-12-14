@@ -13,6 +13,8 @@ $_con = null;
  */
 function get_db_connection()
 {
+    global $_con;
+
     if (!empty($_con)) {
         return $_con;
     }
@@ -26,14 +28,30 @@ function get_db_connection()
     return $_con;
 }
 
+register_shutdown_function(function () {
+    global $_con;
+
+    if (!empty($_con)) {
+        $_con->close();
+    }
+});
+
 /**
  * Escapes a value for safe use in a MySQL query.
  *
  * @param  mixed  $value The value to escape.
  * @return string        The escaped version of the value.
  */
-function escape($value)
+function escape($value, $name = '')
 {
+    if (is_array($value)) {
+        if (empty($name)) {
+            throw new MySqlException('Cannot use an array as a value for a MySQL query.');
+        } else {
+            throw new MySqlException("Failed to escape `$name` for use in MySQL because it was an array.");
+        }
+    }
+
     $con = get_db_connection();
 
     return mysqli_real_escape_string($con, $value);
@@ -85,7 +103,7 @@ function query($query, $parameters = [])
                 return $matches[0];
             }
 
-            return escape($parameters[$matches[1]]);
+            return escape($parameters[$matches[1]], $matches[1]);
         },
         $query
     );
@@ -121,5 +139,16 @@ function query_first($query, $parameters = [])
         return null;
     } else {
         return array_shift($result);
+    }
+}
+
+class MySqlException extends Exception
+{
+    public function __construct($message, Exception $previous = null)
+    {
+        $con = get_db_connection();
+        $message .= ' MySQL message: `' . $con->error . '` (code ' . $con->errno . ')';
+
+        parent::__construct($message, $con->errno, $previous);
     }
 }

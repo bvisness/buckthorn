@@ -27,7 +27,6 @@ $insert_competition_fields = [
     'c_dbh_neighbor_nb',
     'c_distance_b',
     'c_distance_nb',
-    'c_notes',
 ];
 
 $insert_notes_fields = [
@@ -51,7 +50,7 @@ EOD;
 function generate_insert_query($table, $fields)
 {
     $percented_fields = array_map(function ($field) {
-        return '%' . $field . '%';
+        return "'%" . $field . "%'";
     }, $fields);
 
     return "INSERT INTO $table (" . implode($fields, ', ') . ') VALUES (' . implode($percented_fields, ', ') . ')';

@@ -31,6 +31,6 @@
 
 <body>
 <a href="logout.php">Logout<a/>
-<a href="create_observation.php">Create an observation<a/>
+<a href="create_observation.php">Record an observation<a/>
 <a href="list_observations.php">View an observation<a/>
 <a href="list_teams.php">View a list of the teams<a/>
