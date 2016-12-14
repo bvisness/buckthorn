@@ -1,6 +1,7 @@
 <?php
-    require 'utilities/mysql.php';
-    require 'utilities/output_helpers.php';
+    require_once 'utilities/mysql.php';
+    require_once 'utilities/output_helpers.php';
+    require_once 'utilities/user.php';
 ?>
 
 <?php
@@ -13,7 +14,13 @@
     <h1>Teams</h1>
 
     <?php
-        $teams = query('SELECT * FROM team');
+        if (is_admin()):
+            $teams = query('SELECT * FROM team');
+        else:
+            $teams = query('SELECT * FROM team WHERE t_id = %t_id%', [
+                't_id' => $_SESSION['t_id']
+            ]);
+        endif;
     ?>
 
     <table>
@@ -33,7 +40,7 @@
                             $researchers = query('SELECT researcher.r_id, r_name FROM membership JOIN researcher ON membership.r_id = researcher.r_id WHERE t_id = %t_id% and (end is null or end > NOW())', [
                                 't_id' => $team['t_id'],
                             ]);
-                            
+                                
                             $researcher_names = array_column($researchers, 'r_name');
                             echo implode(', ', $researcher_names);
                         ?>
@@ -42,11 +49,13 @@
             <?php endforeach; ?>
         </tbody>
     </table>
-	<h3>Create a new team</h3>
-	<form  method="post" action="create_team.php">
-	<p>Name: <input type='text' name = 'team_name'/></p>
-	<p><input type='submit' value='Create Team' /></p>
-	</form>
+    <?php if (is_admin()): ?>
+	   <h3>Create a new team</h3>
+	   <form  method="post" action="create_team.php">
+	   <p>Name: <input type='text' name = 'team_name'/></p>
+	   <p><input type='submit' value='Create Team' /></p>
+	   </form>
+    <?php endif; ?>
 
 <?php /* ------------------- PAGE CONTENT ENDS HERE ------------------- */ ?>
 
