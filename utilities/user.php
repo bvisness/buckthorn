@@ -72,3 +72,8 @@ function is_team_selected()
 {
     return !empty(get_team());
 }
+
+function is_admin()
+{
+    return $_SESSION['t_id'] === 0;
+}
