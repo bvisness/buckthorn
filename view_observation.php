@@ -14,12 +14,18 @@
         $observation = query_first('SELECT * FROM observation WHERE o_id = %o_id%', [
             'o_id' => $_GET['id'],
         ]);
+		$observation_t_id = $observation['t_id'];
+		$active_team = get_team();
+		$active_t_id = $active_team['t_id'];
     ?>
 
     <h1>Observation Details</h1>
 
     <?php if (empty($observation)): ?>
         <p class="error">No observation found with id <?php echo $_GET['id'] ?></p>
+	<?php elseif (($active_t_id != $observation_t_id) && !is_admin()):
+		redirect('/');
+	?>
     <?php else: ?>
         <?php
             $notes = query_first('SELECT * FROM notes WHERE o_id = %o_id%', [
@@ -175,6 +181,11 @@
 
             <p><?php echo e($notes['n_competition']) ?></p>
         </div>
+		<h4>Delete this observation:</h4>
+		<form  method="post" action="delete_observation.php ">
+		<input type = "hidden" name= "o_id" value = "<?php echo $_GET['id']?>" />
+		<p><input type='submit' value='Delete' /></p>
+		</form>
     <?php endif; ?>
 
 <?php /* ------------------- PAGE CONTENT ENDS HERE ------------------- */ ?>
