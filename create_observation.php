@@ -29,12 +29,6 @@
         // Get fields that are always present
         $valid_fields = array_intersect_key($_POST, array_flip($insert_observation_fields));
 
-        // Validate fields
-        if (false) {
-            $_POST['error'] = 'You messed up!';
-            goto output;
-        }
-
         // Save all valid vields in the session
         $_SESSION['create_observation']['observation'] = $valid_fields;
         $notes_fields = array_keys($_SESSION['create_observation']['notes']);
@@ -82,6 +76,26 @@
                 $_SESSION['create_observation']['competitions'] = [];
             } break;
             case 'commit': {
+				// Validate fields				
+				if (empty($_POST['o_date'])
+					|| empty($_POST['o_latitude'])
+					|| empty($_POST['o_longitude'])
+					|| empty($_POST['o_quadrantsize'])
+					|| empty($_POST['o_numstems'])
+					|| empty($_POST['o_foliar'])
+					|| empty($_POST['o_circumference'])) {
+					$_POST['error'] = 'Error: Required fields are missing values';
+					goto output;
+				}
+				elseif(strlen(substr(strrchr($_POST['o_latitude'], "."), 1)) < 6 || strlen(substr(strrchr($_POST['o_longitude'], "."), 1)) < 6){
+					$_POST['error'] = 'Error: Latitude or Longitude measurements need six points of precision';
+					goto output;
+				}
+				elseif((double) $_POST['o_foliar'] > 100){
+					$_POST['error'] = 'Error: Percent foliar cover cannot exceed 100 percent';
+					goto output;
+				}
+				
                 $con = get_db_connection();
                 $did_start_transaction = $con->begin_transaction();
 
