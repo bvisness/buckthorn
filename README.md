@@ -19,15 +19,21 @@ Of course, if *this* fails, you need to install [Homebrew](http://brew.sh/).
 
 First install the [Windows Subsystem for Linux](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide).
 
-From `bash`, try running `php`. If this succeeds, great! Otherwise, run `sudo apt-get install php5-cli` or whatever its suggestion is.
+From `bash`, try running `php`. If this succeeds, great! Otherwise, run the following:
+
+```
+sudo apt-get install php5-cli
+sudo apt-get install php5-mysql
+sudo apt-get install php5-mysqlnd
+```
 
 You can find your C drive at `/mnt/c`. From there you can `cd` to the project's directory.
 
 ### Installing Composer
 
-Composer is the de facto package manager for PHP. To get it, `cd` into this project's directory, then go to https://getcomposer.org/download/ and follow the instructions there.
+Composer is the de facto package manager for PHP. To get it, `cd` into this project's directory, then go to https://getcomposer.org/download/ and follow the instructions there. **Make sure to use the command-line installation.**
 
-Once installed, run the following:
+Once Composer is installed, run the following:
 
 ```
 php composer.phar install
