@@ -61,7 +61,7 @@ In the other, run the following:
 
 You should now be able to open `http://localhost:8000` in your browser and see a success message!
 
-### No, I got nasty MySQL authentication errors!
+### I got nasty MySQL authentication errors!
 
 Open wiebe and log into mysql. Run the following:
 
@@ -71,3 +71,12 @@ SET PASSWORD = PASSWORD('[your password]');
 ```
 
 `[your password]` should of course be replaced with your actual password.
+
+
+## Project Structure
+
+The project structure is quite simple. All PHP files that are accessible through the browser are in the root folder. The other folders are as follows:
+
+- `assets` contains static assets like stylesheets and images.
+- `templates` contains `header.php` and `footer.php`, which are included in most PHP files to ensure that they look pretty in the browser.
+- `utilities` contains several files with helpful functions. Each file is thoroughly commented.

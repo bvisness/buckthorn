@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file contains information specifically about buckthorn queries. The
+ * arrays of column names are used both to generate insert queries and to help
+ * with form validation in create_observation.php.
+ */
+
 require_once 'mysql.php';
 
 $insert_observation_fields = [
@@ -37,6 +43,9 @@ $insert_notes_fields = [
     'n_competition',
 ];
 
+// Yes, we calculate the Shannon-Wiener index through a single SQL query. The
+// weird syntax is simply a construct in PHP that lets you make strings that
+// span multiple lines.
 $shannon_wiener_query = <<<'EOD'
 SELECT
     -SUM(
@@ -47,6 +56,11 @@ FROM bio_count
 WHERE o_id = %o_id%
 EOD;
 
+/**
+ * Generates an INSERT INTO query string based on a table name and an array of
+ * column names. The VALUES part of the string will have %placeholders% so that
+ * it can be directly used with the query() function in mysql.php.
+ */
 function generate_insert_query($table, $fields)
 {
     $percented_fields = array_map(function ($field) {

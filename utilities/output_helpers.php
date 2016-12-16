@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * This file contains helpful functions for producing HTML output.
+ */
+
 require_once 'env.php';
 
+/**
+ * Uses the site root defined in .env to produce an environment-correct
+ * absolute URL.
+ */
 function url($path)
 {
     $base = '';
@@ -12,36 +20,18 @@ function url($path)
     return rtrim($base, '/') . '/' . ltrim($path, '/');
 }
 
+/**
+ * Redirects the user to a URL. Plain and simple.
+ */
 function redirect($url)
 {
     header('Location: ' . $url);
     exit;
 }
 
-function debug_table($rows)
-{
-?>
-    <table>
-        <thead>
-            <tr>
-                <?php foreach (reset($rows) as $column_name => $value): ?>
-                    <td><?php echo $column_name ?></td>
-                <?php endforeach; ?>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($rows as $row): ?>
-                <tr>
-                    <?php foreach ($row as $column_name => $value): ?>
-                        <td><?php echo $value ?></td>
-                    <?php endforeach; ?>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-<?php
-}
-
+/**
+ * Escapes user values for HTML output.
+ */
 function e($output)
 {
     return htmlspecialchars($output);

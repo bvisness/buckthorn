@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * This file contains helpful functions for interacting with a MySQL database.
+ * Of particular interest is the query() function (and its partner,
+ * query_first()), which provide an easy mechanism for escaping values for use
+ * in an SQL query.
+ */
+
 require_once 'env.php';
 
 $_con = null;
@@ -7,7 +14,7 @@ $_con = null;
 /**
  * Gets a connection to the database. This can be safely called as many times
  * as you want during the script's execution. If a connection is already open,
- * that connection will be used.
+ * that existing connection will be used.
  *
  * @return mysqli The database connection object.
  */
