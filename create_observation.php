@@ -87,8 +87,8 @@
 					$_POST['error'] = 'Error: Required fields are missing values';
 					goto output;
 				}
-				elseif(strlen(substr(strrchr($_POST['o_latitude'], "."), 1)) < 6 || strlen(substr(strrchr($_POST['o_longitude'], "."), 1)) < 6){
-					$_POST['error'] = 'Error: Latitude or Longitude measurements need six points of precision';
+				elseif(strlen(substr(strrchr($_POST['o_latitude'], "."), 1)) < 5 || strlen(substr(strrchr($_POST['o_longitude'], "."), 1)) < 5){
+					$_POST['error'] = 'Error: Latitude or Longitude measurements need five points of precision';
 					goto output;
 				}
 				elseif((double) $_POST['o_foliar'] > 100){
