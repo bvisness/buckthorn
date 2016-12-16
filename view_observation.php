@@ -52,23 +52,23 @@
                                         <td><?php echo $observation['o_latitude'] ?>, <?php echo $observation['o_longitude'] ?></td>
                                     </tr>
                                     <tr>
-                                        <th>Quadrant Size</th>
-                                        <td><?php echo $observation['o_quadrantsize'] ?> m<sup>2</sup></td>
+                                        <th>Quadrant size (m<sup>2</sup>)</th>
+                                        <td><?php echo $observation['o_quadrantsize'] ?>
                                     </tr>
                                     <tr>
-                                        <th>Number of Buckthorn Stems</th>
+                                        <th>Number of buckthorn stems</th>
                                         <td><?php echo $observation['o_numstems'] ?></td>
                                     </tr>
                                     <tr>
-                                        <th>Buckthorn Foliar Coverage</th>
+                                        <th>Buckthorn foliar coverage (%)</th>
                                         <td><?php echo $observation['o_foliar'] ?>%</td>
                                     </tr>
                                     <tr>
-                                        <th>Median Buckthorn Stem Circumference</th>
+                                        <th>Median buckthorn stem circumference (cm)</th>
                                         <td><?php echo $observation['o_circumference'] ?></td>
                                     </tr>
                                     <tr>
-                                        <th>Photos</th>
+                                        <th>URL to photos</th>
                                         <td><a href="<?php echo e($observation['o_photos']) ?>">View</a></td>
                                     </tr>
                                     <tr>

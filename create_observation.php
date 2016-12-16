@@ -220,26 +220,26 @@ output:
                                 </tr>
                                 <tr>
                                     <th>Latitude</th>
-                                    <td><input type="number" name="o_latitude" value="<?php echo field_or_empty($observation, 'o_latitude') ?>"></td>
+                                    <td><input type="number" step="any" name="o_latitude" value="<?php echo field_or_empty($observation, 'o_latitude') ?>"></td>
                                 </tr>
                                 <tr>
                                     <th>Longitude</th>
-                                    <td><input type="number" name="o_longitude" value="<?php echo field_or_empty($observation, 'o_longitude') ?>"></td>
+                                    <td><input type="number" step="any" name="o_longitude" value="<?php echo field_or_empty($observation, 'o_longitude') ?>"></td>
                                 </tr>
                                 <tr>
-                                    <th>Quadrant Size (m<sup>2</sup>)</th>
+                                    <th>Quadrant size (m<sup>2</sup>)</th>
                                     <td><input type="number" name="o_quadrantsize" value="<?php echo field_or_empty($observation, 'o_quadrantsize') ?>"></td>
                                 </tr>
                                 <tr>
-                                    <th>Number of Buckthorn stems</th>
+                                    <th>Number of buckthorn stems</th>
                                     <td><input type="number" name="o_numstems" value="<?php echo field_or_empty($observation, 'o_numstems') ?>"></td>
                                 </tr>
                                 <tr>
-                                    <th>Percent Buckthorn foliar coverage</th>
+                                    <th>Buckthorn foliar coverage (%)</th>
                                     <td><input type="number" name="o_foliar" value="<?php echo field_or_empty($observation, 'o_foliar') ?>"></td>
                                 </tr>
                                 <tr>
-                                    <th>Median Buckthorn stem circumference (cm)</th>
+                                    <th>Median buckthorn stem circumference (cm)</th>
                                     <td><input type="number" name="o_circumference" value="<?php echo field_or_empty($observation, 'o_circumference') ?>"></td>
                                 </tr>
                                 <tr>
