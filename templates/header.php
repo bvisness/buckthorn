@@ -26,11 +26,22 @@
 
 <head>
     <title><?php echo $header_options['title'] ?></title>
-    <link rel="stylesheet" type="text/css" href="normalize.css"></link>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
+    <link rel="stylesheet" type="text/css" href="normalize.css" />
+    <link rel="stylesheet" type="text/css" href="assets/styles.css" />
 </head>
 
 <body>
-<a href="logout.php">Logout<a/>
-<a href="create_observation.php">Record an observation<a/>
-<a href="list_observations.php">View an observation<a/>
-<a href="list_teams.php">View a list of the teams<a/>
+    <nav>
+        <a class="brand" href="<?php echo url('/') ?>">Buckthorn</a>
+        <ul>
+            <li class="active"><a href="logout.php">Logout</a></li>
+            <li><a href="create_observation.php">Record an observation</a></li>
+            <li><a href="list_observations.php">View observations</a></li>
+            <li><a href="list_teams.php">View teams</a></li>
+        </ul>
+    </nav>
+    <main>

@@ -26,26 +26,19 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // authenticate the user?
 
-        // Verify form type was provided (so we know which fields to getting)
-        if (empty($_POST['form_type'])) {
-            $_POST['error'] = 'No form type was specified. (Why are you POSTing weird stuff?)';
-            goto output;
+        // Update fields that are always present
+        $valid_fields = array_intersect_key($_POST, array_flip($insert_observation_fields));
+        $_SESSION['create_observation']['observation'] = $valid_fields;
+
+        if (isset($_POST['n_habitat'])) {
+            $_SESSION['create_observation']['notes']['n_habitat'] = $_POST['n_habitat'];
+        }
+        if (isset($_POST['n_general'])) {
+            $_SESSION['create_observation']['notes']['n_general'] = $_POST['n_general'];
         }
 
         // Get fields and do stuff
-        switch ($_POST['form_type']) {
-            case 'add_observation': {
-                $valid_fields = array_intersect_key($_POST, array_flip($insert_observation_fields));
-                // validate?
-                $_SESSION['create_observation']['observation'] = $valid_fields;
-
-                if (isset($_POST['n_habitat'])) {
-                    $_SESSION['create_observation']['notes']['n_habitat'] = $_POST['n_habitat'];
-                }
-                if (isset($_POST['n_general'])) {
-                    $_SESSION['create_observation']['notes']['n_general'] = $_POST['n_general'];
-                }
-            } break;
+        switch ($_GET['action']) {
             case 'add_bio_count': {
                 // Validate bc_count
                 if (!isset($_POST['bc_count'])) {
@@ -186,197 +179,202 @@ output:
         <p class="error"><?php echo $_POST['error'] ?></p>
     <?php endif; ?>
 
-
-    <h2>General information</h2>
-
     <form action="create_observation.php" method="POST">
         <?php
             $observation = $_SESSION['create_observation']['observation'];
             $notes = $_SESSION['create_observation']['notes'];
         ?>
-        <input type="hidden" name="form_type" value="add_observation">
-        <table>
+
+        <table class="observation-grid">
             <tbody>
                 <tr>
-                    <th>Date</th>
-                    <td><input type="date" name="o_date" value="<?php echo field_or_empty($observation, 'o_date') ?>"></td>
-                </tr>
-                <tr>
-                    <th>Latitude</th>
-                    <td><input type="text" name="o_latitude" value="<?php echo field_or_empty($observation, 'o_latitude') ?>"></td>
-                </tr>
-                <tr>
-                    <th>Longitude</th>
-                    <td><input type="text" name="o_longitude" value="<?php echo field_or_empty($observation, 'o_longitude') ?>"></td>
-                </tr>
-                <tr>
-                    <th>Quadrant Size (m)</th>
-                    <td><input type="text" name="o_quadrantsize" value="<?php echo field_or_empty($observation, 'o_quadrantsize') ?>"></td>
-                </tr>
-                <tr>
-                    <th>Number of Buckthorn stems</th>
-                    <td><input type="text" name="o_numstems" value="<?php echo field_or_empty($observation, 'o_numstems') ?>"></td>
-                </tr>
-                <tr>
-                    <th>Percent Buckthorn foliar coverage</th>
-                    <td><input type="text" name="o_foliar" value="<?php echo field_or_empty($observation, 'o_foliar') ?>"></td>
-                </tr>
-                <tr>
-                    <th>Median Buckthorn stem circumference (cm)</th>
-                    <td><input type="text" name="o_circumference" value="<?php echo field_or_empty($observation, 'o_circumference') ?>"></td>
-                </tr>
-                <tr>
-                    <th>URL to photos</th>
-                    <td><input type="text" name="o_photos" value="<?php echo field_or_empty($observation, 'o_photos') ?>"></td>
-                </tr>
-                <tr>
-                    <th>Habitat description</th>
-                    <td><textarea name="n_habitat" cols="30" rows="10"><?php echo field_or_empty($notes, 'n_habitat') ?></textarea></td>
-                </tr>
-                <tr>
-                    <th>Other notes</th>
-                    <td><textarea name="n_general" cols="30" rows="10"><?php echo field_or_empty($notes, 'n_general') ?></textarea></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><input type="submit" value="Submit" id="submitObservation"></td>
+                    <td>
+                        <h2>General information</h2>
+                        <table class="form-table">
+                            <tbody>
+                                <tr>
+                                    <th>Date</th>
+                                    <td><input type="date" name="o_date" value="<?php echo field_or_empty($observation, 'o_date') ?>"></td>
+                                </tr>
+                                <tr>
+                                    <th>Latitude</th>
+                                    <td><input type="number" name="o_latitude" value="<?php echo field_or_empty($observation, 'o_latitude') ?>"></td>
+                                </tr>
+                                <tr>
+                                    <th>Longitude</th>
+                                    <td><input type="number" name="o_longitude" value="<?php echo field_or_empty($observation, 'o_longitude') ?>"></td>
+                                </tr>
+                                <tr>
+                                    <th>Quadrant Size (m<sup>2</sup>)</th>
+                                    <td><input type="number" name="o_quadrantsize" value="<?php echo field_or_empty($observation, 'o_quadrantsize') ?>"></td>
+                                </tr>
+                                <tr>
+                                    <th>Number of Buckthorn stems</th>
+                                    <td><input type="number" name="o_numstems" value="<?php echo field_or_empty($observation, 'o_numstems') ?>"></td>
+                                </tr>
+                                <tr>
+                                    <th>Percent Buckthorn foliar coverage</th>
+                                    <td><input type="number" name="o_foliar" value="<?php echo field_or_empty($observation, 'o_foliar') ?>"></td>
+                                </tr>
+                                <tr>
+                                    <th>Median Buckthorn stem circumference (cm)</th>
+                                    <td><input type="number" name="o_circumference" value="<?php echo field_or_empty($observation, 'o_circumference') ?>"></td>
+                                </tr>
+                                <tr>
+                                    <th>URL to photos</th>
+                                    <td><input type="text" name="o_photos" value="<?php echo field_or_empty($observation, 'o_photos') ?>"></td>
+                                </tr>
+                                <tr>
+                                    <th>Habitat description</th>
+                                    <td><textarea name="n_habitat" cols="30" rows="8"><?php echo field_or_empty($notes, 'n_habitat') ?></textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>Other notes</th>
+                                    <td><textarea name="n_general" cols="30" rows="8"><?php echo field_or_empty($notes, 'n_general') ?></textarea></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <h2>Biodiversities</h2>
+
+                        <?php
+                            $bio_counts = $_SESSION['create_observation']['bio_counts'];
+                            $bio_count_buckthorns = array_filter($bio_counts, function ($bio_count) {
+                                return $bio_count['bc_is_buckthorn'] == '1';
+                            });
+                            $bio_count_buckthorn = array_shift($bio_count_buckthorns);
+
+                            $species_counter = ord('A');
+                        ?>
+                        
+                        <table class="form-table">
+                            <tbody>
+                                <?php if (!empty($bio_counts)): ?>
+                                    <?php if (!empty($bio_count_buckthorn)): ?>
+                                        <tr>
+                                            <th>Buckthorn count</th>
+                                            <td><?php echo $bio_count_buckthorn['bc_count'] ?></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                    <?php foreach ($bio_counts as $bio_count): ?>
+                                        <?php
+                                            if ($bio_count['bc_is_buckthorn'] == '1') {
+                                                continue;
+                                            }
+                                        ?>
+                                        <tr>
+                                            <th>Species <?php echo chr($species_counter) ?> count</th>
+                                            <td><?php echo $bio_count['bc_count'] ?></td>
+                                        </tr>
+                                        <?php
+                                            $species_counter++;
+                                        ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <tr>
+                                    <th>New species</th>
+                                    <td>
+                                        <input type="checkbox" id="bc_is_buckthorn" name="bc_is_buckthorn">
+                                        <label for="bc_is_buckthorn">Is buckthorn?</label>
+                                        <input type="number" id="bc_count" name="bc_count" placeholder="Count">
+                                        <input type="submit" value="Add new biodiversity" formaction="create_observation.php?action=add_bio_count">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><input class="btn-subtle" type="submit" value="Remove all biodiversities" formaction="create_observation.php?action=reset_bio_counts"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <h2>Competitions</h2>
+
+                        <?php
+                            $stem_counter = 0;
+                        ?>
+
+                        <?php foreach ($_SESSION['create_observation']['competitions'] as $competition): ?>
+                            <?php
+                                $stem_counter++;
+                            ?>
+
+                            <h3>Stem <?php echo $stem_counter ?></h3>
+
+                            <table class="form-table">
+                                <tbody>
+                                    <tr>
+                                        <th>Stem DBH</th>
+                                        <td><?php echo $competition['c_dbh_buckthorn'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nearest buckthorn neighbor: DBH</th>
+                                        <td><?php echo $competition['c_dbh_neighbor_b'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nearest buckthorn neighbor: Distance</th>
+                                        <td><?php echo $competition['c_distance_b'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nearest non-buckthorn neighbor: DBH</th>
+                                        <td><?php echo $competition['c_dbh_neighbor_nb'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nearest non-buckthorn neightbor: Distance</th>
+                                        <td><?php echo $competition['c_distance_nb'] ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        <?php endforeach; ?>
+
+                        <h3>New competition</h3>
+
+                        <table class="form-table">
+                            <tbody>
+                                <tr>
+                                    <th>Stem DBH</th>
+                                    <td><input type="number" name="c_dbh_buckthorn"></td>
+                                </tr>
+                                <tr>
+                                    <th>Nearest buckthorn neighbor: DBH</th>
+                                    <td><input type="number" name="c_dbh_neighbor_b"></td>
+                                </tr>
+                                <tr>
+                                    <th>Nearest buckthorn neighbor: Distance</th>
+                                    <td><input type="number" name="c_distance_b"></td>
+                                </tr>
+                                <tr>
+                                    <th>Nearest non-buckthorn neighbor: DBH</th>
+                                    <td><input type="number" name="c_dbh_neighbor_nb"></td>
+                                </tr>
+                                <tr>
+                                    <th>Nearest non-buckthorn neightbor: Distance</th>
+                                    <td><input type="number" name="c_distance_nb"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><input type="submit" value="Add new competition" formaction="create_observation.php?action=add_competition"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><input class="btn-subtle" type="submit" value="Remove all competitions" formaction="create_observation.php?action=reset_competitions"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        
+                    </td>
                 </tr>
             </tbody>
         </table>
-	</form>
 
+        <input class="btn-finalize" type="submit" value="Finalize Observation" formaction="create_observation.php?action=commit">
 
-    <h2>Biodiversities</h2>
-
-    <?php
-        $bio_counts = $_SESSION['create_observation']['bio_counts'];
-        $bio_count_buckthorns = array_filter($bio_counts, function ($bio_count) {
-            return $bio_count['bc_is_buckthorn'] == '1';
-        });
-        $bio_count_buckthorn = array_shift($bio_count_buckthorns);
-
-        $species_counter = ord('A');
-    ?>
-
-    <?php if (!empty($bio_counts)): ?>
-        <table>
-            <tbody>
-                <?php if (!empty($bio_count_buckthorn)): ?>
-                    <tr>
-                        <th>Buckthorn count</th>
-                        <td><?php echo $bio_count_buckthorn['bc_count'] ?></td>
-                    </tr>
-                <?php endif; ?>
-                <?php foreach ($bio_counts as $bio_count): ?>
-                    <?php
-                        if ($bio_count['bc_is_buckthorn'] == '1') {
-                            continue;
-                        }
-                    ?>
-                    <tr>
-                        <th>Species <?php echo chr($species_counter) ?> count</th>
-                        <td><?php echo $bio_count['bc_count'] ?></td>
-                    </tr>
-                    <?php
-                        $species_counter++;
-                    ?>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php endif; ?>
-    <form action="create_observation.php" method="POST">
-        <input type="hidden" name="form_type" value="add_bio_count">
-        <label for="bc_is_buckthorn">Is buckthorn?</label>
-        <input type="checkbox" id="bc_is_buckthorn" name="bc_is_buckthorn">
-        <label for="bc_count">Count:</label>
-        <input type="number" id="bc_count" name="bc_count">
-        <input type="submit" value="Add new">
-    </form>
-    <form action="create_observation.php" method="POST">
-        <input type="hidden" name="form_type" value="reset_bio_counts">
-        <input type="submit" value="Reset">
-    </form>
-
-
-    <h2>Competitions</h2>
-
-    <?php
-        $stem_counter = 0;
-    ?>
-
-    <?php foreach ($_SESSION['create_observation']['competitions'] as $competition): ?>
-        <?php
-            $stem_counter++;
-        ?>
-
-        <h3>Stem <?php echo $stem_counter ?></h3>
-
-        <table>
-            <tbody>
-                <tr>
-                    <th>Stem DBH</th>
-                    <td><?php echo $competition['c_dbh_buckthorn'] ?></td>
-                </tr>
-                <tr>
-                    <th>Nearest buckthorn neighbor: DBH</th>
-                    <td><?php echo $competition['c_dbh_neighbor_b'] ?></td>
-                </tr>
-                <tr>
-                    <th>Nearest buckthorn neighbor: Distance</th>
-                    <td><?php echo $competition['c_distance_b'] ?></td>
-                </tr>
-                <tr>
-                    <th>Nearest non-buckthorn neighbor: DBH</th>
-                    <td><?php echo $competition['c_dbh_neighbor_nb'] ?></td>
-                </tr>
-                <tr>
-                    <th>Nearest non-buckthorn neightbor: Distance</th>
-                    <td><?php echo $competition['c_distance_nb'] ?></td>
-                </tr>
-            </tbody>
-        </table>
-    <?php endforeach; ?>
-
-    <h3>New competition</h3>
-
-    <form action="create_observation.php" method="POST">
-        <input type="hidden" name="form_type" value="add_competition">
-        <table>
-            <tbody>
-                <tr>
-                    <th>Stem DBH</th>
-                    <td><input type="number" name="c_dbh_buckthorn"></td>
-                </tr>
-                <tr>
-                    <th>Nearest buckthorn neighbor: DBH</th>
-                    <td><input type="number" name="c_dbh_neighbor_b"></td>
-                </tr>
-                <tr>
-                    <th>Nearest buckthorn neighbor: Distance</th>
-                    <td><input type="number" name="c_distance_b"></td>
-                </tr>
-                <tr>
-                    <th>Nearest non-buckthorn neighbor: DBH</th>
-                    <td><input type="number" name="c_dbh_neighbor_nb"></td>
-                </tr>
-                <tr>
-                    <th>Nearest non-buckthorn neightbor: Distance</th>
-                    <td><input type="number" name="c_distance_nb"></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><input type="submit" value="Add new competition"></td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
-
-    <form action="create_observation.php" method="POST">
-        <input type="hidden" name="form_type" value="reset_competitions">
-        <input type="submit" value="Reset">
-    </form>
-
-    <form action="create_observation.php" method="POST">
-        <input type="hidden" name="form_type" value="commit">
-        <input type="submit" value="Finalize Observation">
+        <script>
+            $('input, textarea').on('keypress', function (e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                }
+            });
+        </script>
     </form>
 
 <?php /* ------------------- PAGE CONTENT ENDS HERE ------------------- */ ?>

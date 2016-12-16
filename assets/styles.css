@@ -1,0 +1,176 @@
+/* ----------------------------------------------
+ * Global styles
+ * ---------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ccc;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.btn-subtle {
+    border: 0;
+    background: none;
+    color: #999;
+    border-bottom: 1px dashed #ccc;
+    padding: 0;
+    cursor: pointer;
+}
+
+
+/* ----------------------------------------------
+ * Nav styles
+ * ---------------------------------------------- */
+
+nav {
+    background-color: #03a9f4;
+    color: #fff;
+    padding: 10px;
+    box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+nav a {
+    color: inherit;
+}
+
+nav a.brand {
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 18px;
+    font-weight: lighter;
+    vertical-align: middle;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+nav ul li {
+    display: inline-block;
+    border-radius: 3px;
+}
+
+nav ul li.active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+nav ul li a {
+    padding: 15px;
+    display: block;
+    font-size: 12px;
+    line-height: 10px;
+    text-transform: uppercase;
+}
+
+
+/* ----------------------------------------------
+ * Main styles
+ * ---------------------------------------------- */
+
+main {
+    width: 95%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+
+    padding: 25px;
+    background-color: #fff;
+    box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 6px 6px;
+}
+
+
+/* ----------------------------------------------
+ * Table styles
+ * ---------------------------------------------- */
+
+table thead tr th {
+    border-bottom: 1px solid #ccc;
+}
+
+
+/* ----------------------------------------------
+ * Create observation styles
+ * ---------------------------------------------- */
+
+table.observation-grid h2 {
+    margin-top: 1.3em;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4px;
+}
+
+table.observation-grid table {
+    width: 100%;
+}
+
+table.observation-grid td {
+    vertical-align: top;
+}
+
+table.observation-grid td:first-of-type {
+    width: 55%;
+}
+
+table.observation-grid td:nth-of-type(2) {
+    padding-left: 5%;
+}
+
+table.form-table th, table.form-table td {
+    vertical-align: middle;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+table.form-table th {
+    text-align: right;
+    padding-right: 10px;
+}
+
+table.form-table td {
+    width: 60%;
+}
+
+table.form-table input, table.form-table textarea {
+    width: 100%;
+    display: block;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+table.form-table input[type=checkbox] {
+    width: initial;
+}
+
+table.form-table .btn-subtle {
+    width: initial;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#bc_is_buckthorn {
+    display: inline;
+}
+
+.btn-finalize {
+    display: block;
+    margin: 30px auto 25px;
+    padding: 10px 25px;
+}
