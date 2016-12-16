@@ -375,7 +375,7 @@ output:
         <input class="btn-finalize" type="submit" value="Finalize Observation" formaction="create_observation.php?action=commit">
 
         <script>
-            $('input, textarea').on('keypress', function (e) {
+            $('input').on('keypress', function (e) {
                 if (e.which == 13) {
                     e.preventDefault();
                 }
