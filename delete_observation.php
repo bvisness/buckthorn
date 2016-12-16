@@ -20,4 +20,4 @@
 																			't_id' => $t_id,
 																			]);
 	endif;
-	redirect('/');
+	redirect('/list_observations.php');
