@@ -1,0 +1,25 @@
+Requirements completion:
+
+1) Properly designed and normalized tables, including foreign keys and proper “on update/on delete” specifications.
+
+We have properly designed and normalized tables with proper settings for updates and deletes. Our UI is not designed to handle a user updating an observation. In a case where an update is required, we recommend copying the relevent data, then deleting the observation and creating a new one in its place.
+
+2) There will be two access points:
+	a) A student access that allows a new observation to be added and also allows reports to be generated.
+	b) An administrative access that allows full add/delete/update access to all tables and also report generation. Updates need only be done for non-key attributes
+
+We have two access points. Permissions about what the user is able to do and what the user will see will be different depending on if the user is an admin or a researcher.
+	a) Students are allowed to view who is on their team, view the past observations made by their team, delete observations made by their team, and create new observations
+	b) Admins have complete access to view all observations and teams. Admins also are able to delete any observation. They are also able to create new teams, add researchers, and assign researchers to teams.	
+
+3) You will need to use a transaction to enter an observation and commit only when all tables have been successfully completed.
+
+The creation of an observation is done entirely in a single transaction
+
+4) The user interface needs to do some calculations before storing some attributes
+
+The UI calculates and displays the Shannon-Weiner index in the view observation page. The Shannon-Weiner index is not a stored attribute in our database.
+
+5) It should be robust against user error
+
+A reasonable attempt has been made to verify that the user data that is input during observation creation is sufficient and correct. The attempts that we made are not designed to be fully robust against purposefully malicious users.
