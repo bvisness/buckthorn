@@ -34,154 +34,165 @@
             ]);
         ?>
 
-        <div class="observation">
-            <h2>Details</h2>
-            
-            <table>
-                <tbody>
-                    <tr>
-                        <th>Date</th>
-                        <td><?php echo $observation['o_date'] ?></td>
-                    </tr>
-                    <tr>
-                        <th>Coordinates</th>
-                        <td><?php echo $observation['o_latitude'] ?>, <?php echo $observation['o_longitude'] ?></td>
-                    </tr>
-                    <tr>
-                        <th>Quadrant Size</th>
-                        <td><?php echo $observation['o_quadrantsize'] ?> m<sup>2</sup></td>
-                    </tr>
-                    <tr>
-                        <th>Number of Buckthorn Stems</th>
-                        <td><?php echo $observation['o_numstems'] ?></td>
-                    </tr>
-                    <tr>
-                        <th>Buckthorn Foliar Coverage</th>
-                        <td><?php echo $observation['o_foliar'] ?>%</td>
-                    </tr>
-                    <tr>
-                        <th>Median Buckthorn Stem Circumference</th>
-                        <td><?php echo $observation['o_circumference'] ?></td>
-                    </tr>
-                    <tr>
-                        <th>Photos</th>
-                        <td><a href="<?php echo e($observation['o_photos']) ?>">View</a></td>
-                    </tr>
-                    <tr>
-                        <th>Habitat description</th>
-                        <td><?php echo e($notes['n_habitat']) ?></td>
-                    </tr>
-                    <tr>
-                        <th>Other notes</th>
-                        <td><?php echo e($notes['n_general']) ?></td>
-                    </tr>
-                </tbody>
-            </table>
+        <table class="observation-grid">
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="observation">
+                            <h2>Details</h2>
+                            
+                            <table class="form-table">
+                                <tbody>
+                                    <tr>
+                                        <th>Date</th>
+                                        <td><?php echo $observation['o_date'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Coordinates</th>
+                                        <td><?php echo $observation['o_latitude'] ?>, <?php echo $observation['o_longitude'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Quadrant Size</th>
+                                        <td><?php echo $observation['o_quadrantsize'] ?> m<sup>2</sup></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Number of Buckthorn Stems</th>
+                                        <td><?php echo $observation['o_numstems'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Buckthorn Foliar Coverage</th>
+                                        <td><?php echo $observation['o_foliar'] ?>%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Median Buckthorn Stem Circumference</th>
+                                        <td><?php echo $observation['o_circumference'] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Photos</th>
+                                        <td><a href="<?php echo e($observation['o_photos']) ?>">View</a></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Habitat description</th>
+                                        <td><?php echo e($notes['n_habitat']) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Other notes</th>
+                                        <td><?php echo e($notes['n_general']) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Biodiversity notes</th>
+                                        <td><?php echo e($notes['n_biodiversity']) ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Competition notes</th>
+                                        <td><?php echo e($notes['n_competition']) ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-            <iframe src="//www.google.com/maps/embed/v1/place?q=<?php echo urlencode($observation['o_latitude'] . ', ' . $observation['o_longitude']) ?>&zoom=18&key=<?php echo $_ENV['GOOGLE_MAPS_KEY'] ?>">
-            </iframe>
-        </div>
-        <div class="bio_counts">
-            <h2>Biodiversities</h2>
+                            <iframe class="google-map" src="//www.google.com/maps/embed/v1/place?q=<?php echo urlencode($observation['o_latitude'] . ', ' . $observation['o_longitude']) ?>&zoom=18&key=<?php echo $_ENV['GOOGLE_MAPS_KEY'] ?>">
+                            </iframe>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="bio_counts">
+                            <h2>Biodiversities</h2>
 
-            <?php
-                $bio_counts = query('SELECT * FROM bio_count WHERE o_id = %o_id%', [
-                    'o_id' => $observation['o_id'],
-                ]);
-                $bio_count_buckthorns = array_filter($bio_counts, function ($bio_count) {
-                    return $bio_count['bc_is_buckthorn'] == '1';
-                });
-                $bio_count_buckthorn = array_shift($bio_count_buckthorns);
+                            <?php
+                                $bio_counts = query('SELECT * FROM bio_count WHERE o_id = %o_id%', [
+                                    'o_id' => $observation['o_id'],
+                                ]);
+                                $bio_count_buckthorns = array_filter($bio_counts, function ($bio_count) {
+                                    return $bio_count['bc_is_buckthorn'] == '1';
+                                });
+                                $bio_count_buckthorn = array_shift($bio_count_buckthorns);
 
-                // Yes, we compute Shannon-Wiener completely through MySQL. Heck yeah!
-                $shannon_wiener = query_first($shannon_wiener_query, [
-                    'o_id' => $observation['o_id'],
-                ]);
+                                // Yes, we compute Shannon-Wiener completely through MySQL. Heck yeah!
+                                $shannon_wiener = query_first($shannon_wiener_query, [
+                                    'o_id' => $observation['o_id'],
+                                ]);
 
-                $species_counter = ord('A');
-            ?>
-            
-            <table>
-                <tbody>
-                    <?php if (!empty($bio_count_buckthorn)): ?>
-                        <tr>
-                            <th>Buckthorn count</th>
-                            <td><?php echo $bio_count_buckthorn['bc_count'] ?></td>
-                        </tr>
-                    <?php endif; ?>
-                    <?php foreach ($bio_counts as $bio_count): ?>
-                        <?php
-                            if ($bio_count['bc_is_buckthorn'] == '1') {
-                                continue;
-                            }
-                        ?>
-                        <tr>
-                            <th>Species <?php echo chr($species_counter) ?> count</th>
-                            <td><?php echo $bio_count['bc_count'] ?></td>
-                        </tr>
-                        <?php
-                            $species_counter++;
-                        ?>
-                    <?php endforeach; ?>
-                    <tr>
-                        <th>Shannon-Wiener Index</th>
-                        <td><?php echo $shannon_wiener['H'] ?></td>
-                    </tr>
-                </tbody>
-            </table>
+                                $species_counter = ord('A');
+                            ?>
+                            
+                            <table class="form-table">
+                                <tbody>
+                                    <?php if (!empty($bio_count_buckthorn)): ?>
+                                        <tr>
+                                            <th>Buckthorn count</th>
+                                            <td><?php echo $bio_count_buckthorn['bc_count'] ?></td>
+                                        </tr>
+                                    <?php endif; ?>
+                                    <?php foreach ($bio_counts as $bio_count): ?>
+                                        <?php
+                                            if ($bio_count['bc_is_buckthorn'] == '1') {
+                                                continue;
+                                            }
+                                        ?>
+                                        <tr>
+                                            <th>Species <?php echo chr($species_counter) ?> count</th>
+                                            <td><?php echo $bio_count['bc_count'] ?></td>
+                                        </tr>
+                                        <?php
+                                            $species_counter++;
+                                        ?>
+                                    <?php endforeach; ?>
+                                    <tr>
+                                        <th>Shannon-Wiener Index</th>
+                                        <td><?php echo $shannon_wiener['H'] ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="competitions">
+                            <h2>Competitions</h2>
+                            
+                            <?php
+                                $competitions = query('SELECT * FROM competition WHERE o_id = %o_id%', [
+                                    'o_id' => $observation['o_id'],
+                                ]);
 
-            <h3>Notes</h3>
+                                $stem_counter = 0;
+                            ?>
 
-            <p><?php echo e($notes['n_biodiversity']) ?></p>
-        </div>
-        <div class="competitions">
-            <h2>Competitions</h2>
-            
-            <?php
-                $competitions = query('SELECT * FROM competition WHERE o_id = %o_id%', [
-                    'o_id' => $observation['o_id'],
-                ]);
+                            <?php foreach ($competitions as $competition): ?>
+                                <?php
+                                    $stem_counter++;
+                                ?>
 
-                $stem_counter = 0;
-            ?>
+                                <h3>Stem <?php echo $stem_counter ?></h3>
 
-            <?php foreach ($competitions as $competition): ?>
-                <?php
-                    $stem_counter++;
-                ?>
+                                <table class="form-table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Stem DBH</th>
+                                            <td><?php echo $competition['c_dbh_buckthorn'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nearest buckthorn neighbor: DBH</th>
+                                            <td><?php echo $competition['c_dbh_neighbor_b'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nearest buckthorn neighbor: Distance</th>
+                                            <td><?php echo $competition['c_distance_b'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nearest non-buckthorn neighbor: DBH</th>
+                                            <td><?php echo $competition['c_dbh_neighbor_nb'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Nearest non-buckthorn neightbor: Distance</th>
+                                            <td><?php echo $competition['c_distance_nb'] ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            <?php endforeach; ?>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-                <h3>Stem <?php echo $stem_counter ?></h3>
-
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Stem DBH</th>
-                            <td><?php echo $competition['c_dbh_buckthorn'] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Nearest buckthorn neighbor: DBH</th>
-                            <td><?php echo $competition['c_dbh_neighbor_b'] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Nearest buckthorn neighbor: Distance</th>
-                            <td><?php echo $competition['c_distance_b'] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Nearest non-buckthorn neighbor: DBH</th>
-                            <td><?php echo $competition['c_dbh_neighbor_nb'] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Nearest non-buckthorn neightbor: Distance</th>
-                            <td><?php echo $competition['c_distance_nb'] ?></td>
-                        </tr>
-                    </tbody>
-                </table>
-            <?php endforeach; ?>
-
-            <h3>Notes</h3>
-
-            <p><?php echo e($notes['n_competition']) ?></p>
-        </div>
 		<h4>Delete this observation:</h4>
 		<form  method="post" action="delete_observation.php ">
 		<input type = "hidden" name= "o_id" value = "<?php echo $_GET['id']?>" />
