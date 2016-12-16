@@ -1,7 +1,6 @@
 <?php
     require_once 'utilities/env.php';
     require_once 'utilities/output_helpers.php';
-    require_once 'utilities/user.php';
 ?>
 <?php
     $header_options['title'] = 'All Observations';
@@ -44,10 +43,6 @@
                     <td><?php echo $observation['o_date'] ?></td>
                     <td><?php echo $team['t_name'] ?></td>
                     <td><a href="<?php echo $link_url ?>">View</a></td>
-                    <?php $set_delete_observation_url = url("delete_observation.php?o_id=$observation[o_id]"); ?>
-                    <?php if (is_admin()): ?>
-                            <td><a href = <?php echo $set_delete_observation_url ?>>  Delete<a/>
-                    <?php endif; ?>
                 </tr>
             <?php endforeach; ?>
         </tbody>
