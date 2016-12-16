@@ -26,10 +26,17 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // authenticate the user?
 
-        // Update fields that are always present
+        // Get fields that are always present
         $valid_fields = array_intersect_key($_POST, array_flip($insert_observation_fields));
-        $_SESSION['create_observation']['observation'] = $valid_fields;
 
+        // Validate fields
+        if (false) {
+            $_POST['error'] = 'You messed up!';
+            goto output;
+        }
+
+        // Save all valid vields in the session
+        $_SESSION['create_observation']['observation'] = $valid_fields;
         $notes_fields = array_keys($_SESSION['create_observation']['notes']);
         foreach ($notes_fields as $field) {
             if (isset($_POST[$field])) {
