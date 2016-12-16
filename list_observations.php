@@ -3,7 +3,7 @@
     require_once 'utilities/output_helpers.php';
 ?>
 <?php
-    $header_options['title'] = 'All Observations';
+    $header_options['title'] = 'View Observations';
     $header_options['active_menu_id'] = 'list_observations';
     include 'templates/header.php';
 ?>

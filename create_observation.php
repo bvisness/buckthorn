@@ -189,7 +189,7 @@
 
 <?php
 output:
-    $header_options['title'] = 'Create Observation';
+    $header_options['title'] = 'Record an Observation';
     $header_options['active_menu_id'] = 'create_observation';
     include 'templates/header.php';
 ?>

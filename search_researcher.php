@@ -8,7 +8,7 @@
     endif;
 ?>
 <?php
-    $header_options['title'] = 'Search researchers';
+    $header_options['title'] = 'Search Researchers';
     include 'templates/header.php';
 ?>
 

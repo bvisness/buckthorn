@@ -4,7 +4,7 @@
 ?>
 
 <?php
-    $header_options['title'] = 'Hello World!';
+    $header_options['title'] = 'Buckthorn';
     include 'templates/header.php';
 ?>
 
