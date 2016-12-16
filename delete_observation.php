@@ -6,7 +6,6 @@
 	$o_id = $_POST['o_id'];
 	$team = get_team();
 	$t_id = $team['t_id'];
-	var_dump($o_id);
     if (is_admin()):
 		$delete_observation_query = query("DELETE FROM observation
 															WHERE o_id = '%o_id%'",[
