@@ -30,11 +30,11 @@
         $valid_fields = array_intersect_key($_POST, array_flip($insert_observation_fields));
         $_SESSION['create_observation']['observation'] = $valid_fields;
 
-        if (isset($_POST['n_habitat'])) {
-            $_SESSION['create_observation']['notes']['n_habitat'] = $_POST['n_habitat'];
-        }
-        if (isset($_POST['n_general'])) {
-            $_SESSION['create_observation']['notes']['n_general'] = $_POST['n_general'];
+        $notes_fields = array_keys($_SESSION['create_observation']['notes']);
+        foreach ($notes_fields as $field) {
+            if (isset($_POST[$field])) {
+                $_SESSION['create_observation']['notes'][$field] = $_POST[$field];
+            }
         }
 
         // Get fields and do stuff
@@ -226,11 +226,19 @@ output:
                                 </tr>
                                 <tr>
                                     <th>Habitat description</th>
-                                    <td><textarea name="n_habitat" cols="30" rows="8"><?php echo field_or_empty($notes, 'n_habitat') ?></textarea></td>
+                                    <td><textarea name="n_habitat" rows="6"><?php echo field_or_empty($notes, 'n_habitat') ?></textarea></td>
                                 </tr>
                                 <tr>
                                     <th>Other notes</th>
-                                    <td><textarea name="n_general" cols="30" rows="8"><?php echo field_or_empty($notes, 'n_general') ?></textarea></td>
+                                    <td><textarea name="n_general" rows="6"><?php echo field_or_empty($notes, 'n_general') ?></textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>Biodiversity notes</th>
+                                    <td><textarea name="n_biodiversity" rows="6"><?php echo field_or_empty($notes, 'n_biodiversity') ?></textarea></td>
+                                </tr>
+                                <tr>
+                                    <th>Competition notes</th>
+                                    <td><textarea name="n_competition" rows="6"><?php echo field_or_empty($notes, 'n_competition') ?></textarea></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -359,8 +367,6 @@ output:
                                 </tr>
                             </tbody>
                         </table>
-
-                        
                     </td>
                 </tr>
             </tbody>
