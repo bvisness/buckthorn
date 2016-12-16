@@ -5,6 +5,7 @@
 ?>
 <?php
     $header_options['title'] = 'View Team';
+    $header_options['active_menu_id'] = 'list_teams';
     include 'templates/header.php';
 ?>
 
@@ -28,14 +29,13 @@
 	?>
 	<h1><?php echo $team_name['t_name']?></h1>
 	
-	<table>
+	<table class="pretty-table">
         <thead>
             <tr>
 				<th>Team member ID</th>
                 <th>Team member name</th>
                 <th>Begin Date</th>
 				<th>End Date</th>
-                <th></th>
             </tr>
         </thead>
         <tbody>

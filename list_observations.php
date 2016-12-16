@@ -4,6 +4,7 @@
 ?>
 <?php
     $header_options['title'] = 'All Observations';
+    $header_options['active_menu_id'] = 'list_observations';
     include 'templates/header.php';
 ?>
 
@@ -23,7 +24,7 @@
 
     <h1>Observations</h1>
 
-    <table>
+    <table class="pretty-table">
         <thead>
             <tr>
                 <th>Date</th>

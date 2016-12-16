@@ -12,12 +12,22 @@
         'title' => '',
         'is_login_page' => false,
         'is_team_select_page' => false,
+        'active_menu_id' => '',
     ];
     
     if (!is_logged_in() && !$header_options['is_login_page']) {
         redirect('login.php');
     } else if (is_logged_in() && !is_team_selected() && !$header_options['is_login_page'] && !$header_options['is_team_select_page']) {
         redirect('teamselect.php');
+    }
+
+    function active($menu_id)
+    {
+        global $header_options;
+
+        if ($header_options['active_menu_id'] == $menu_id) {
+            echo 'class="active"';
+        }
     }
 ?>
 
@@ -39,10 +49,10 @@
     <nav>
         <a class="brand" href="<?php echo url('/') ?>">Buckthorn</a>
         <ul>
-            <li class="active"><a href="logout.php">Logout</a></li>
-            <li><a href="create_observation.php">Record an observation</a></li>
-            <li><a href="list_observations.php">View observations</a></li>
-            <li><a href="list_teams.php">View teams</a></li>
+            <li <?php active('logout') ?>><a href="logout.php">Logout</a></li>
+            <li <?php active('create_observation') ?>><a href="create_observation.php">Record an observation</a></li>
+            <li <?php active('list_observations') ?>><a href="list_observations.php">View observations</a></li>
+            <li <?php active('list_teams') ?>><a href="list_teams.php">View teams</a></li>
         </ul>
     </nav>
     <main>

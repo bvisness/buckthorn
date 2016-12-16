@@ -6,6 +6,7 @@
 
 <?php
     $header_options['title'] = 'All Teams';
+    $header_options['active_menu_id'] = 'list_teams';
     include 'templates/header.php';
 ?>
 
@@ -23,7 +24,7 @@
         endif;
     ?>
 
-    <table>
+    <table class="pretty-table">
         <thead>
             <tr>
                 <th>Team Name</th>

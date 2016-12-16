@@ -5,6 +5,7 @@
 ?>
 <?php
     $header_options['title'] = 'View Observation';
+    $header_options['active_menu_id'] = 'list_observations';
     include 'templates/header.php';
 ?>
 

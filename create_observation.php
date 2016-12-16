@@ -190,6 +190,7 @@
 <?php
 output:
     $header_options['title'] = 'Create Observation';
+    $header_options['active_menu_id'] = 'create_observation';
     include 'templates/header.php';
 ?>
 <?php /* ------------------- PAGE CONTENT BEGINS HERE ------------------- */ ?>
