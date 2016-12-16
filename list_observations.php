@@ -14,9 +14,9 @@
 
     <?php
         if (is_admin()):
-            $observations = query('SELECT o_id, t_id, o_date FROM observation');
+            $observations = query('SELECT o_id, t_id, o_date FROM observation ORDER BY o_date DESC');
         else:
-            $observations = query('SELECT o_id, t_id, o_date FROM observation WHERE t_id = %t_id%', [
+            $observations = query('SELECT o_id, t_id, o_date FROM observation WHERE t_id = %t_id% ORDER BY o_date DESC', [
                 't_id' => $_SESSION['t_id']
             ]);
         endif;
