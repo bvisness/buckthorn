@@ -39,7 +39,7 @@
                 <tr>
                     <td>
                         <div class="observation">
-                            <h2>Details</h2>
+                            <h2>General information</h2>
                             
                             <table class="form-table">
                                 <tbody>
@@ -96,7 +96,7 @@
                     </td>
                     <td>
                         <div class="bio_counts">
-                            <h2>Biodiversities</h2>
+                            <h2>Biodiversity Info</h2>
 
                             <?php
                                 $bio_counts = query('SELECT * FROM bio_count WHERE o_id = %o_id%', [
@@ -145,7 +145,7 @@
                             </table>
                         </div>
                         <div class="competitions">
-                            <h2>Competitions</h2>
+                            <h2>Competition Info</h2>
                             
                             <?php
                                 $competitions = query('SELECT * FROM competition WHERE o_id = %o_id%', [
@@ -160,7 +160,7 @@
                                     $stem_counter++;
                                 ?>
 
-                                <h3>Stem <?php echo $stem_counter ?></h3>
+                                <h3>Plant <?php echo $stem_counter ?></h3>
 
                                 <table class="form-table">
                                     <tbody>

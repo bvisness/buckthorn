@@ -266,7 +266,7 @@ output:
                         </table>
                     </td>
                     <td>
-                        <h2>Biodiversities</h2>
+                        <h2>Biodiversity Info</h2>
 
                         <?php
                             $bio_counts = $_SESSION['create_observation']['bio_counts'];
@@ -318,7 +318,7 @@ output:
                         </table>
 
 
-                        <h2>Competitions</h2>
+                        <h2>Competition Info</h2>
 
                         <?php
                             $stem_counter = 0;
